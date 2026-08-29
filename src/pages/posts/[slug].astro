@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { formatDate } from '../../utils/date';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout
+  title={`${post.data.title} ${post.data.titleEmphasis ?? ''}`.trim() + ' | Amber Uncut'}
+  description={post.data.description}
+>
+  <SiteHeader />
+
+  <main>
+    <article class="full-story" aria-labelledby="story-title">
+      <div class="story-kicker">
+        <span>{post.data.kicker}</span>
+        <span>{formatDate(post.data.date)}</span>
+      </div>
+      <h1 id="story-title">
+        {post.data.title}{post.data.titleEmphasis && <> <em>{post.data.titleEmphasis}</em></>}
+      </h1>
+      <img class="story-page-image" src={post.data.image} alt={post.data.imageAlt} />
+      <div class="full-story-copy">
+        <Content />
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

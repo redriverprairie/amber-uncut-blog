@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { formatDate } from '../utils/date';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Archive | Amber Uncut" description="The archive of stories from Amber Uncut.">
+  <SiteHeader />
+
+  <main class="latest-grid" aria-labelledby="archive-heading">
+    <div class="section-heading">
+      <p class="eyebrow">All the notes so far</p>
+      <h1 id="archive-heading">The archive.</h1>
+    </div>
+    <div class="stories">
+      {
+        posts.map((post) => (
+          <article class="story-card">
+            <a href={`/posts/${post.id}/`} class="card-image">
+              <img src={post.data.image} alt={post.data.imageAlt} loading="lazy" decoding="async" />
+            </a>
+            <div class="story-kicker">
+              <span>{post.data.kicker}</span>
+              <span>{formatDate(post.data.date)}</span>
+            </div>
+            <h2>
+              <a href={`/posts/${post.id}/`}>
+                {post.data.title}
+                {post.data.titleEmphasis && (
+                  <>
+                    {' '}
+                    <em>{post.data.titleEmphasis}</em>
+                  </>
+                )}
+              </a>
+            </h2>
+            <p>{post.data.excerpt ?? post.data.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

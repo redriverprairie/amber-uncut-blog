@@ -1,0 +1,198 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { formatDate } from '../utils/date';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const lead = posts.find((post) => post.data.featured) ?? posts[0];
+const rest = posts.filter((post) => post.id !== lead?.id).slice(0, 3);
+
+// Netlify Forms collects submissions by default. Set PUBLIC_NEWSLETTER_ENDPOINT
+// to post to another service (Formspree, Buttondown, etc.) instead.
+const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? '/';
+---
+
+<BaseLayout
+  title="Amber Uncut | Notes From the Chair"
+  description="Amber Uncut: one beginner learning about grooming, confidence, and life one note at a time."
+>
+  <div class="ticker">
+    <span>VOL. 01</span><span>LEARNING OUT LOUD, ONE NOTE AT A TIME</span><span>EST. 2026</span>
+  </div>
+
+  <SiteHeader variant="home" />
+
+  <main id="top">
+    <section class="masthead" aria-labelledby="site-title">
+      <div class="masthead-copy">
+        <div class="masthead-topline"><span>Amber Uncut</span><span>First issue</span></div>
+        <div>
+          <p class="eyebrow">Hi, I am Amber</p>
+          <h1 id="site-title">Just over here <em>winging it.</em></h1>
+        </div>
+        <div class="masthead-intro">
+          <p>
+            My husband handles all the business stuff, the legal stuff, and all the things that make
+            my head hurt. Me? I'm just over here winging it.
+          </p>
+          <p>
+            Amber Uncut is where I get to be myself. No filter, no fancy business talk, and
+            definitely no pretending I've got it all figured out. Just a goofy small-town girl
+            sharing whatever is on her mind.
+          </p>
+          <p>
+            I love a cold White Claw, sunshine on my face, lake days, and pretty much anything that
+            involves summer. If the temperature drops below what I consider reasonable, you'll hear
+            me complain about it. Cold weather is for the birds.
+          </p>
+          <p>
+            This is where you'll find the real me: the funny stories, the random thoughts, the
+            occasional rants, and all the perfectly imperfect moments in between. So grab a drink,
+            get comfortable, and welcome to Amber Uncut.
+          </p>
+        </div>
+        <a href="#latest" class="masthead-link">Read my notes <i data-lucide="arrow-down"></i></a>
+      </div>
+      <figure class="masthead-portrait">
+        <img src="/assets/Amber_Uncut.jpeg" alt="Amber smiling in a pink shirt" />
+        <figcaption>Amber, learning in public.</figcaption>
+      </figure>
+    </section>
+
+    {
+      lead && (
+        <section class="featured" id="latest" aria-label="Featured story">
+          <article class="lead-story">
+            <a href={`/posts/${lead.id}/`} class="image-link">
+              <img src={lead.data.image} alt={lead.data.imageAlt} loading="lazy" decoding="async" />
+            </a>
+            <div class="story-kicker">
+              <span>{lead.data.kicker}</span>
+              <span>{formatDate(lead.data.date)}</span>
+            </div>
+            <h2>
+              <a href={`/posts/${lead.id}/`}>
+                {lead.data.title}
+                {lead.data.titleEmphasis && (
+                  <>
+                    {' '}
+                    <em>{lead.data.titleEmphasis}</em>
+                  </>
+                )}
+              </a>
+            </h2>
+            <div class="story-footer">
+              <p>{lead.data.excerpt ?? lead.data.description}</p>
+              <button class="save-button" aria-label={`Save ${lead.data.title}`}>
+                <i data-lucide="bookmark" />
+              </button>
+            </div>
+          </article>
+          <aside class="side-note">
+            <p class="eyebrow">A small introduction</p>
+            <blockquote>
+              &ldquo;This is not a guide from someone who has it all figured out. It is a place to be
+              curious in public.&rdquo;
+            </blockquote>
+            <p>
+              I am Amber. I am sharing what I notice, what I am learning, and the conversations that
+              help me feel a little less alone.
+            </p>
+            <a href="#letters">
+              Write alongside me <i data-lucide="arrow-up-right" />
+            </a>
+            <div class="stamp">
+              TC
+              <br />
+              <span>01</span>
+            </div>
+          </aside>
+        </section>
+      )
+    }
+
+    <section class="latest-grid" id="culture" aria-labelledby="latest-heading">
+      <div class="section-heading">
+        <p class="eyebrow">A few recent notes</p>
+        <h2 id="latest-heading">What I am learning</h2>
+        <a href="/archive/">Read more notes <i data-lucide="arrow-right"></i></a>
+      </div>
+      <div class="stories">
+        {
+          rest.map((post, index) => (
+            <article class="story-card" id={index === 0 ? 'body' : undefined}>
+              <a href={`/posts/${post.id}/`} class="card-image">
+                <img src={post.data.image} alt={post.data.imageAlt} loading="lazy" decoding="async" />
+              </a>
+              <div class="story-kicker">
+                <span>{post.data.kicker}</span>
+                <span>{post.data.readTime ?? formatDate(post.data.date)}</span>
+              </div>
+              <h3>
+                <a href={`/posts/${post.id}/`}>
+                  {post.data.title}
+                  {post.data.titleEmphasis && (
+                    <>
+                      {' '}
+                      <em>{post.data.titleEmphasis}</em>
+                    </>
+                  )}
+                </a>
+              </h3>
+              <p>{post.data.excerpt ?? post.data.description}</p>
+            </article>
+          ))
+        }
+        <article class="story-card text-card">
+          <p class="eyebrow">A reminder</p>
+          <p class="large-quote">You are allowed to be new at something.</p>
+          <span>A few things on my mind</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="newsletter" id="letters" aria-labelledby="letters-heading">
+      <div>
+        <p class="eyebrow">Every now and then</p>
+        <h2 id="letters-heading">A note from <br />Amber.</h2>
+      </div>
+      <div class="newsletter-right">
+        <p>
+          A quiet email when I have something worth saying. No sales, no polished advice, just a few
+          thoughts from where I am right now.
+        </p>
+        <form
+          class="subscribe-form"
+          name="newsletter"
+          method="post"
+          action={newsletterEndpoint}
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          <input type="hidden" name="form-name" value="newsletter" />
+          <p class="sr-only">
+            <label>Leave this field empty <input name="bot-field" tabindex="-1" /></label>
+          </p>
+          <label class="sr-only" for="email">Email address</label>
+          <input id="email" name="email" type="email" placeholder="Your email address" required />
+          <button type="submit">Keep in touch <i data-lucide="arrow-right"></i></button>
+        </form>
+        <p class="form-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="field-notes" id="archive" aria-label="Field notes">
+      <p class="eyebrow">A few things on my mind</p>
+      <p>The small things I am noticing, questioning, and coming back to this week.</p>
+      <a href="/archive/" aria-label="Read more notes from Amber"><i data-lucide="arrow-up-right"
+        ></i></a>
+    </section>
+  </main>
+
+  <SiteFooter variant="home" />
+</BaseLayout>

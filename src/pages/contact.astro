@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout
+  title="Contact | Amber Uncut"
+  description="Get in touch with Amber, or book a chair at the salon."
+>
+  <SiteHeader />
+
+  <main>
+    <article class="full-story" aria-labelledby="contact-title">
+      <div class="story-kicker"><span>CONTACT</span><span>SAY HELLO</span></div>
+      <h1 id="contact-title">Come sit in <em>my chair.</em></h1>
+      <div class="full-story-copy">
+        <p>
+          The fastest way to reach me is Instagram. Send me a message, tell me what you are
+          thinking, and I will get back to you as soon as I am out from behind the chair.
+        </p>
+        <p>
+          <a class="masthead-link" href={SITE.instagram} rel="me noopener" target="_blank">
+            Message me on Instagram
+          </a>
+        </p>
+        <p>
+          If you would rather read than talk, the <a href="/archive/">archive</a> is where all the
+          notes live, and you can get new ones by email from the
+          <a href="/#letters">home page</a>.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

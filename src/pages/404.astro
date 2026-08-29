@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout
+  title="Page not found | Amber Uncut"
+  description="That page could not be found on Amber Uncut."
+>
+  <SiteHeader />
+
+  <main>
+    <article class="full-story">
+      <div class="story-kicker"><span>404</span><span>WRONG CHAIR</span></div>
+      <h1>Well, this one <em>got away from me.</em></h1>
+      <div class="full-story-copy">
+        <p>
+          That page does not exist. Maybe I moved it, maybe I never wrote it, or maybe the link had
+          a typo. Either way, let's get you back to something worth reading.
+        </p>
+        <p>
+          <a class="masthead-link" href="/archive/">Read the archive</a>
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

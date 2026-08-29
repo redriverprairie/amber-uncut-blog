@@ -1,0 +1,36 @@
+---
+interface Props {
+  variant?: 'home' | 'inner';
+}
+
+const { variant = 'inner' } = Astro.props;
+---
+
+{
+  variant === 'home' ? (
+    <header class="site-header">
+      <a class="wordmark" href="#top" aria-label="Amber Uncut home">
+        AMBER <em>UNCUT</em>
+      </a>
+      <button class="menu-button" aria-label="Open menu" aria-expanded="false">
+        <i data-lucide="menu" />
+      </button>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#latest">Latest</a>
+        <a href="#culture">Learning</a>
+        <a href="#body">Notes</a>
+        <a href="#letters">Letters</a>
+      </nav>
+      <a class="issue-link" href="#letters">
+        Stay in touch <i data-lucide="arrow-up-right" />
+      </a>
+    </header>
+  ) : (
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="Amber Uncut home">
+        AMBER <em>UNCUT</em>
+      </a>
+      <a class="issue-link" href="/">Back to home</a>
+    </header>
+  )
+}

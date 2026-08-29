@@ -1,0 +1,20 @@
+---
+import { SITE } from '../config';
+
+interface Props {
+  variant?: 'home' | 'inner';
+}
+
+const { variant = 'inner' } = Astro.props;
+---
+
+<footer>
+  <a class="wordmark" href={variant === 'home' ? '#top' : '/'}>AMBER <em>UNCUT</em></a>
+  <p>Learning in public.</p>
+  <div>
+    <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a>
+    <a href="/about/">About</a>
+    <a href="/contact/">Contact</a>
+    <a href="/rss.xml">RSS</a>
+  </div>
+</footer>

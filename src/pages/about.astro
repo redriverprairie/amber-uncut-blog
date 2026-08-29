@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout
+  title="About | Amber Uncut"
+  description="About Amber: a small-town girl, a men's barber of 13 years, and the owner of a brand-new salon."
+>
+  <SiteHeader />
+
+  <main>
+    <article class="full-story" aria-labelledby="about-title">
+      <div class="story-kicker"><span>ABOUT</span><span>AMBER UNCUT</span></div>
+      <h1 id="about-title">Hi, I am <em>Amber.</em></h1>
+      <img class="story-page-image" src="/assets/Amber_Uncut.jpeg" alt="Amber smiling in a pink shirt" />
+      <div class="full-story-copy">
+        <p>
+          I am a men's barber, a small-town girl, and the owner of a brand-new salon. I have been in
+          the grooming game for about 13 years, and I have worked just about everywhere along the
+          way: commercial shops, booth rentals, four moves across four cities for my husband's
+          career.
+        </p>
+        <p>
+          My husband handles all the business stuff, the legal stuff, and all the things that make
+          my head hurt. Me? I am just over here winging it.
+        </p>
+        <p>
+          Amber Uncut is where I get to be myself. No filter, no fancy business talk, and definitely
+          no pretending I have it all figured out. It is the funny stories, the random thoughts, the
+          occasional rants, and all the perfectly imperfect moments in between.
+        </p>
+        <p>
+          I love a cold White Claw, sunshine on my face, lake days, and pretty much anything that
+          involves summer. Cold weather is for the birds.
+        </p>
+        <p>
+          I do not always get it right, and I will keep screwing up. But I am committed to growing,
+          learning, and building confidence out loud. So grab a drink, get comfortable, and welcome
+          to Amber Uncut.
+        </p>
+        <p>
+          <a class="masthead-link" href="/archive/">Read the notes</a>
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>
