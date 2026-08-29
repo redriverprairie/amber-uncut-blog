@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout
+  title="Privacy | Amber Uncut"
+  description="What Amber Uncut collects, what it does not, and how to get your information removed."
+>
+  <SiteHeader />
+
+  <main>
+    <article class="full-story" aria-labelledby="privacy-title">
+      <div class="story-kicker"><span>PRIVACY</span><span>PLAIN ENGLISH</span></div>
+      <h1 id="privacy-title">The <em>short version.</em></h1>
+      <div class="full-story-copy">
+        <p>
+          I am a barber, not a data company. This site collects as little as possible, and I am not
+          selling anything about you to anyone.
+        </p>
+
+        <h2>What I collect</h2>
+        <p>
+          If you type your email into the signup form, I keep that email so I can send you a note
+          when I write something. That is it. No name, no address, no tracking of what you read.
+        </p>
+
+        <h2>What I do not collect</h2>
+        <p>
+          There are no advertising trackers, no cookies set by me, and no analytics watching where
+          you click. I do not know who you are unless you tell me.
+        </p>
+
+        <h2>Other companies involved</h2>
+        <p>
+          This site is hosted by GitHub Pages, which keeps basic server logs like IP addresses for
+          security purposes. The fonts come from Google Fonts, and the icons from a service called
+          unpkg. Those requests reach their servers when your browser loads the page. If you sign up
+          for the email list, the form provider stores your address so I can reach you.
+        </p>
+
+        <h2>Getting removed</h2>
+        <p>
+          Message me on <a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a> or
+          reach me through the <a href="/contact/">contact page</a> and ask me to delete your email.
+          I will, and I will not ask you why.
+        </p>
+
+        <h2>Children</h2>
+        <p>This site is meant for adults and is not directed at children under 13.</p>
+
+        <h2>Changes</h2>
+        <p>
+          If this ever changes, for example if I add sponsors or analytics, I will update this page
+          to say so plainly.
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <SiteFooter />
+</BaseLayout>

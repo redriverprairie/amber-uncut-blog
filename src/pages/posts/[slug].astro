@@ -6,17 +6,31 @@ import SiteFooter from '../../components/SiteFooter.astro';
 import { formatDate } from '../../utils/date';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('posts', ({ data }) => !data.draft);
-  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+  const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  );
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      newer: index > 0 ? posts[index - 1] : undefined,
+      older: index < posts.length - 1 ? posts[index + 1] : undefined,
+    },
+  }));
 }
 
-const { post } = Astro.props;
+const { post, newer, older } = Astro.props;
 const { Content } = await render(post);
+const fullTitle = `${post.data.title} ${post.data.titleEmphasis ?? ''}`.trim();
 ---
 
 <BaseLayout
-  title={`${post.data.title} ${post.data.titleEmphasis ?? ''}`.trim() + ' | Amber Uncut'}
+  title={`${fullTitle} | Amber Uncut`}
   description={post.data.description}
+  image={post.data.image}
+  type="article"
+  publishDate={post.data.date}
 >
   <SiteHeader />
 
@@ -33,6 +47,31 @@ const { Content } = await render(post);
       <div class="full-story-copy">
         <Content />
       </div>
+
+      {
+        (newer || older) && (
+          <nav class="post-nav" aria-label="More notes">
+            {older ? (
+              <a href={`/posts/${older.id}/`} class="post-nav-prev">
+                <span class="eyebrow">Older note</span>
+                <span>
+                  {older.data.title} {older.data.titleEmphasis}
+                </span>
+              </a>
+            ) : (
+              <span />
+            )}
+            {newer && (
+              <a href={`/posts/${newer.id}/`} class="post-nav-next">
+                <span class="eyebrow">Newer note</span>
+                <span>
+                  {newer.data.title} {newer.data.titleEmphasis}
+                </span>
+              </a>
+            )}
+          </nav>
+        )
+      }
     </article>
   </main>
 
