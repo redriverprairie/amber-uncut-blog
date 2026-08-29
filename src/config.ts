@@ -7,4 +7,5 @@ export const SITE = {
   instagram: 'https://www.instagram.com/cuts_by_amber/',
   facebook: 'https://www.facebook.com/profile.php?id=61566664180427',
   google: 'https://share.google/62bNcQEDrT8RAzOY0',
+  newsletter: 'https://formspree.io/f/mwlkpwwe',
 };

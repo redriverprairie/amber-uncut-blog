@@ -13,9 +13,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
 const lead = posts.find((post) => post.data.featured) ?? posts[0];
 const rest = posts.filter((post) => post.id !== lead?.id).slice(0, 3);
 
-// Set PUBLIC_NEWSLETTER_ENDPOINT to a Formspree form URL to collect signups.
-// Without it the form shows a confirmation without storing anything.
-const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT;
+const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? SITE.newsletter;
 ---
 
 <BaseLayout
