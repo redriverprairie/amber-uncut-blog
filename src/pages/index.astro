@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { formatDate } from '../utils/date';
+import { SITE } from '../config';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
@@ -175,6 +176,22 @@ const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT;
           <button type="submit">Keep in touch <i data-lucide="arrow-right"></i></button>
         </form>
         <p class="form-message" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="booking" aria-labelledby="booking-heading">
+      <div>
+        <p class="eyebrow">Cuts by Amber</p>
+        <h2 id="booking-heading">Come sit in <br />my chair.</h2>
+      </div>
+      <div>
+        <p>
+          Clean-cut, clean-shaven, business-ready, and a little bit of talking shit in between.
+          Booking happens over at the salon site.
+        </p>
+        <a class="booking-link" href={SITE.salon} rel="noopener" target="_blank">
+          Book an appointment <i data-lucide="arrow-up-right"></i>
+        </a>
       </div>
     </section>
 
