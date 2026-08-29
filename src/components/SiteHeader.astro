@@ -30,9 +30,6 @@ const { variant = 'inner' } = Astro.props;
   }
 
   <div class="header-actions">
-    <a class="book-link" href={SITE.salon} rel="noopener" target="_blank">
-      Book a cut <i data-lucide="arrow-up-right"></i>
-    </a>
     {
       variant === 'home' ? (
         <a class="issue-link" href="#letters">
@@ -44,5 +41,8 @@ const { variant = 'inner' } = Astro.props;
         </a>
       )
     }
+    <a class="book-link" href={SITE.salon} rel="noopener" target="_blank">
+      Book a cut <i data-lucide="arrow-up-right"></i>
+    </a>
   </div>
 </header>
