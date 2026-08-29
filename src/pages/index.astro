@@ -12,9 +12,9 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
 const lead = posts.find((post) => post.data.featured) ?? posts[0];
 const rest = posts.filter((post) => post.id !== lead?.id).slice(0, 3);
 
-// Netlify Forms collects submissions by default. Set PUBLIC_NEWSLETTER_ENDPOINT
-// to post to another service (Formspree, Buttondown, etc.) instead.
-const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? '/';
+// Set PUBLIC_NEWSLETTER_ENDPOINT to a Formspree form URL to collect signups.
+// Without it the form shows a confirmation without storing anything.
+const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT;
 ---
 
 <BaseLayout
@@ -166,17 +166,9 @@ const newsletterEndpoint = import.meta.env.PUBLIC_NEWSLETTER_ENDPOINT ?? '/';
           A quiet email when I have something worth saying. No sales, no polished advice, just a few
           thoughts from where I am right now.
         </p>
-        <form
-          class="subscribe-form"
-          name="newsletter"
-          method="post"
-          action={newsletterEndpoint}
-          data-netlify="true"
-          netlify-honeypot="bot-field"
-        >
-          <input type="hidden" name="form-name" value="newsletter" />
+        <form class="subscribe-form" name="newsletter" method="post" action={newsletterEndpoint}>
           <p class="sr-only">
-            <label>Leave this field empty <input name="bot-field" tabindex="-1" /></label>
+            <label>Leave this field empty <input name="_gotcha" tabindex="-1" /></label>
           </p>
           <label class="sr-only" for="email">Email address</label>
           <input id="email" name="email" type="email" placeholder="Your email address" required />
